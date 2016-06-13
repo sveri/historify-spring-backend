@@ -32,20 +32,15 @@ public class Login {
     public LoginResponse login(@RequestBody final UserLogin login)
         throws ServletException {
 		
-		User user = userRep.findOneByUserNameOrEmail(login.name, login.name);
+		User user = userRep.findOneByUserNameOrEmail(login.getName(), login.getName());
 		
-        if (user == null || !UserService.matchesPassword(login.password, user.getPassword())) {
+        if (user == null || !UserService.matchesPassword(login.getPassword(), user.getPassword())) {
             throw new ServletException("Invalid login");
         }
         
-        return new LoginResponse(Jwts.builder().setSubject(login.name)
+        return new LoginResponse(Jwts.builder().setSubject(login.getName())
                 .claim("roles", user.getRole()).setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
-    }
-
-    private static class UserLogin {
-        public String name;
-        public String password;
     }
 
     @SuppressWarnings("unused")
