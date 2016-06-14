@@ -20,11 +20,20 @@ public class LoginTest {
 	
 	@Test
 	public void login() throws Exception {
-		UserLogin userLogin = new UserLogin("sveri", "zzzzzz");
+		UserLogin userLogin = new UserLogin("admin", "admin");
 
 		given().contentType("application/json").body(userLogin, ObjectMapperType.JACKSON_2)
 		.when().post("/apilogin")
 		.then().body("token", notNullValue());
+	}
+	
+	@Test
+	public void loginFailed() throws Exception {
+		UserLogin userLogin = new UserLogin("admin", "wrong_password");
+
+		given().contentType("application/json").body(userLogin, ObjectMapperType.JACKSON_2)
+		.when().post("/apilogin").then().log().body();
+//		.then().body("token", notNullValue());
 	}
 
 

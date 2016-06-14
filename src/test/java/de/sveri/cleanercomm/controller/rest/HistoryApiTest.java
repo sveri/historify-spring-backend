@@ -22,11 +22,11 @@ import de.sveri.historify.controller.rest.UserLogin;
 @WebIntegrationTest(value = "server.port=9090")
 public class HistoryApiTest {
 	
-	RestTemplate restTemplate = new TestRestTemplate();
+//	RestTemplate restTemplate = new TestRestTemplate();
 	
 	@Test
 	public void postBrowserLink() throws Exception {
-		given().params("username", "sveri", "password", "zzzzzz")
+		given().params("username", "admin", "password", "admin")
 		.when().post("/apilogin")
 		.then().body("token", notNullValue());
 //		UserLogin userLogin = new UserLogin("sveri", "zzzzzz");
