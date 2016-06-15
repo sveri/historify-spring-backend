@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.sveri.historify.Application;
 import de.sveri.historify.controller.rest.UserLogin;
+import de.sveri.historify.helper.JwtHelper;
 import io.restassured.RestAssured;
 import io.restassured.mapper.ObjectMapperType;
 
@@ -26,7 +27,7 @@ public class RestAssuredConfig {
 	protected String getValidToken() {
 		UserLogin userLogin = new UserLogin("admin", "admin");
 
-		return "Bearer " + given().contentType("application/json").body(userLogin, ObjectMapperType.JACKSON_2).when()
+		return JwtHelper.BEARER + given().contentType("application/json").body(userLogin, ObjectMapperType.JACKSON_2).when()
 				.post("/apilogin").path("token");
 	}
 

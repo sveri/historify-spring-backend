@@ -12,14 +12,21 @@ public class JwtHelper {
 	@Getter
 	private String secretKey;
 	
+	public static final String BEARER = "Bearer "; 
+	
 	public JwtHelper(){}
 
-	public String getSubject(String token) {
-		return io.jsonwebtoken.Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token).getBody().getSubject();
+	public String getSubject(final String token) {
+		return io.jsonwebtoken.Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(getCleanedToken(token)).getBody().getSubject();
 	}
 
 	public String getRole(String token) {
-		return io.jsonwebtoken.Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token).getBody().get("role",
+		return io.jsonwebtoken.Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(getCleanedToken(token)).getBody().get("role",
 				String.class);
+	}
+	
+	private static String getCleanedToken(final String token){
+		if(token.startsWith(BEARER)) return token.substring(7);
+		return token;		
 	}
 }
