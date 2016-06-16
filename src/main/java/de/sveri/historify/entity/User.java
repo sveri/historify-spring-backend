@@ -39,6 +39,12 @@ public class User {
     
     private String lastLogin;
     
+//    public static User fromUserName(String userName){
+//    	User u = new User();
+//    	u.setUserName(userName);
+//    	return u;
+//    }
+    
     public Boolean isAdmin() {
         return this.role.equals("ROLE_ADMIN");
     }

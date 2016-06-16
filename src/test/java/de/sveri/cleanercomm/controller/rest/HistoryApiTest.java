@@ -1,25 +1,31 @@
 package de.sveri.cleanercomm.controller.rest;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+//import static org.hamcrest.Matchers.eq
+import static org.junit.Assert.assertEquals;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.sveri.historify.entity.BrowserLink;
-import de.sveri.historify.entity.BrowserRepository;
+import de.sveri.historify.entity.BrowserLinkRepository;
 import de.sveri.historify.entity.ClientId;
+import de.sveri.historify.entity.User;
+import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
 
 
 public class HistoryApiTest extends RestAssuredConfig {
 	
 	@Autowired
-	BrowserRepository browserRep;
+	BrowserLinkRepository browserRep;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	@Test
 	public void postBrowserLink() throws Exception {
@@ -34,7 +40,16 @@ public class HistoryApiTest extends RestAssuredConfig {
 		.contentType("application/json").body(link, ObjectMapperType.JACKSON_2)
 		.when().post("/api/browserlink").then().assertThat().statusCode(200);
 		
-		System.out.println(browserRep.findAll());
+		
+		User admin = userRepo.findOneByUserName("admin");
+
+		List<BrowserLink> links = browserRep.findAllByUser(admin);
+		int lastIndex = links.size() - 1;
+		
+		BrowserLink browserLink = links.get(lastIndex);
+
+		assertEquals("Description", "desc", browserLink.getDescription());
+		assertEquals("Title", "Cool Page", browserLink.getTitle());
 		
 	}
 

@@ -17,7 +17,7 @@ import io.restassured.mapper.ObjectMapperType;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=9099")
-public class RestAssuredConfig {
+public abstract class RestAssuredConfig {
 
 	@BeforeClass
 	public static void configureRestAssured() throws Exception {
