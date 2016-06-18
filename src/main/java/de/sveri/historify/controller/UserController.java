@@ -28,9 +28,6 @@ public class UserController {
     @Value("${app.user.verification}")
     private Boolean requireActivation;
     
-    @Value("${app.user.root}")
-    private String userRoot;
-    
     @Autowired
     private UserRepository userRepository;
 
@@ -183,13 +180,13 @@ public class UserController {
         user.setUserName(u.getUserName());
         user.setEmail(u.getEmail());
         
-        return "/user/edit";
+        return "user/edit";
     }
     
     @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
     public String editPost(@Valid User user, BindingResult result) {
         if (result.hasFieldErrors("email")) {
-            return "/user/edit";
+            return "user/edit";
         }
         
         if(userService.getLoggedInUser().isAdmin()) {
