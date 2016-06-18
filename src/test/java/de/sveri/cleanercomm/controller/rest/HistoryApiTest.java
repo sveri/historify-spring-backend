@@ -1,7 +1,6 @@
 package de.sveri.cleanercomm.controller.rest;
 
 import static io.restassured.RestAssured.given;
-//import static org.hamcrest.Matchers.eq
 import static org.junit.Assert.assertEquals;
 
 import java.net.URI;

@@ -43,7 +43,7 @@ public class ApplicationSecurityAdapter extends WebSecurityConfigurerAdapter {
 	    .and()
 	        .rememberMe().key(applicationSecret)
 	        .tokenValiditySeconds(31536000)
-	     .and().csrf().ignoringAntMatchers("/api**", "/api/**");
+	     .and().csrf().ignoringAntMatchers("/api**", "/api/**", "/h2-console**", "/h2-console/**");
 	}
 	
     

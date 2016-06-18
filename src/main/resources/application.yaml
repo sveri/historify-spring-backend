@@ -1,3 +1,19 @@
+logging:
+  file: historify.log
+
+app:
+  user:
+    verification: "false"
+    root: users/
+spring:
+  thymeleaf:
+    mode: HTML5
+  mail:
+    host: localhost
+    default-encoding: UTF-8
+
+---
+  
 app:
   jwt:
     secretKey: glcngfnxvlmbcb3m45rtnbfia990hbuiansernuzipmbzufgns
@@ -10,26 +26,51 @@ app:
     from: sveri80@gmail.com
     support: sveri80@gmail.com
     url: http://localhost:8080
-  spring:
-    thymeleaf:
-      mode: HTML5
-      cache: "false"
-    datasource:
-      url: jdbc:h2:file:~/spring-starter
-      username: sa
-      password: sa
-      driver-class-name: org.h2.Driver
-    jpa:
-      show-sql: "true"
-      hibernate:
-        ddl-auto: update
-    mail:
-      host: localhost
-      default-encoding: UTF-8
-  logging:
-    file: default.log
-    level:
-      org:
-        springframework:
-          jdbc: DEBUG
-          
+spring:
+  profiles: development
+  thymeleaf:
+    cache: "false"
+  datasource:
+    url: jdbc:h2:file:~/spring-starter
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: "true"
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+logging:
+  file: historify.log
+  level:
+    org:
+      springframework:
+        jdbc: DEBUG
+        
+---
+
+app:
+  url: http://localhost:8080
+  email:
+    from: sveri80@gmail.com
+    support: sveri80@gmail.com
+    url: http://historify.sveri.de
+spring:
+  profiles: production
+  thymeleaf:
+    cache: "true"
+  datasource:
+    url: jdbc:postgres://postgres/historify
+    username: historify
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  file: historify.log
+  level:
+    org:
+      springframework:
+        jdbc: ERROR

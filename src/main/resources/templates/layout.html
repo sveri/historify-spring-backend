@@ -28,23 +28,21 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Project name</a>
+				<a class="navbar-brand" href="/">Home</a>
+				<a class="navbar-brand" th:href="@{/history}">History</a>
 			</div>
 
 
 			<div sec:authorize="!isAnonymous()" class="pull-right">
 				<nav>
-
 					<ul>
 						<li><a href="/">Menu</a>
 							<ul>
 								<li><a th:href="@{/user/edit/0}">Profil</a></li>
-<!-- 								<li><a th:href="@{/user/edit/{userid}(userid=${currentUser.username})}">Profil</a></li> -->
 								<li><a th:href="@{/logout}">Log out</a></li>
 							</ul></li>
 					</ul>
 				</nav>
-
 			</div>
 
 			<div sec:authorize="isAnonymous()">
@@ -88,7 +86,7 @@
 
 	<footer class="footer">
 		<div class="container">
-			<p class="text-muted">Place sticky footer content here.</p>
+			<a href="/about">About</a>
 		</div>
 	</footer>
 
