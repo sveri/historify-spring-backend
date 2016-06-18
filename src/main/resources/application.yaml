@@ -24,10 +24,13 @@ spring:
       ddl-auto: create
   mail:
     host: localhost
-    default-encoding: UTF-8
   logging:
     file: default.log
     level:
       org:
         springframework:
           jdbc: DEBUG
+          
+
+#spring.mail.properties.mail.smtp.starttls.enable=true
+#spring.mail.properties.mail.smtp.starttls.required=true

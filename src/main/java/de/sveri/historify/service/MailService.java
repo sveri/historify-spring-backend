@@ -2,6 +2,7 @@ package de.sveri.historify.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,6 +12,7 @@ import de.sveri.historify.entity.User;
 
 @Service
 public class MailService {
+	
     @Value("${app.email.from}")
     private String fromEmail;
     
@@ -20,6 +22,7 @@ public class MailService {
     @Value("${app.email.support}")
     private String supportEmail;
     
+    @Autowired
     private MailSender mailSender;
     
     public void sendMail(String to, String subject, String text) {
