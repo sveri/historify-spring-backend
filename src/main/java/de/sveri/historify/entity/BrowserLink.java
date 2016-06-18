@@ -33,7 +33,7 @@ public class BrowserLink {
 	private Date visitedAt;
 
     @NotNull
-	private ClientId clientId;
+	private String clientId;
 
     @NotNull
     @OneToOne

@@ -16,9 +16,9 @@ spring:
   
 app:
   jwt:
-    secretKey: glcngfnxvlmbcb3m45rtnbfia990hbuiansernuzipmbzufgns
+    secretKey: ${random.value}
   url: http://localhost:8080
-  secret: fljijwernl34lk23j4KWDFLJjknfaskdfjlk34
+  secret: ${random.value}
   user:
     verification: "false"
     root: users/
@@ -52,6 +52,9 @@ logging:
 ---
 
 app:
+  jwt:
+    secretKey: ${random.value}
+  secret: ${random.value}
   url: http://localhost:8080
   email:
     from: sveri80@gmail.com

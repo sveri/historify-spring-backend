@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import de.sveri.historify.entity.BrowserLink;
 import de.sveri.historify.entity.BrowserLinkRepository;
-import de.sveri.historify.entity.ClientId;
 import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
@@ -31,7 +30,7 @@ public class HistoryApiTest extends RestAssuredConfig {
 		BrowserLink link = new BrowserLink();
 		link.setDescription("desc");
 		link.setUri(new URI("http://sveri.de"));
-		link.setClientId(ClientId.CHROME);
+		link.setClientId("CHROME");
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");
 		
