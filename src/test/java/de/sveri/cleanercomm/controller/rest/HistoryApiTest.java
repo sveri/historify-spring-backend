@@ -8,14 +8,22 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import de.sveri.historify.Application;
 import de.sveri.historify.entity.BrowserLink;
 import de.sveri.historify.entity.BrowserLinkRepository;
 import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+@WebIntegrationTest(value = "server.port=9099")
 public class HistoryApiTest extends RestAssuredConfig {
 
 	@Autowired
@@ -40,9 +48,8 @@ public class HistoryApiTest extends RestAssuredConfig {
 		User admin = userRepo.findOneByUserName("admin");
 
 		List<BrowserLink> links = browserRep.findAllByUserOrderByVisitedAtDesc(admin);
-		int lastIndex = links.size() - 1;
 
-		BrowserLink browserLink = links.get(lastIndex);
+		BrowserLink browserLink = links.get(0);
 
 		assertEquals("Description", "desc", browserLink.getDescription());
 		assertEquals("Title", "Cool Page", browserLink.getTitle());
