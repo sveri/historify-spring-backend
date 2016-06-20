@@ -38,7 +38,8 @@ public class Login {
 		}
 
 		return new LoginResponse(Jwts.builder().setSubject(login.getName()).claim("roles", user.getRole())
-				.setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
+				.setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey())
+				.setExpiration(new Date(System.currentTimeMillis() + 12960000)).compact());
 	}
 
 	@SuppressWarnings("unused")

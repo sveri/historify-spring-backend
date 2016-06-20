@@ -16,15 +16,14 @@ import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
 
-
 public class HistoryApiTest extends RestAssuredConfig {
-	
+
 	@Autowired
 	BrowserLinkRepository browserRep;
-	
+
 	@Autowired
 	UserRepository userRepo;
-	
+
 	@Test
 	public void postBrowserLink() throws Exception {
 		BrowserLink link = new BrowserLink();
@@ -33,22 +32,21 @@ public class HistoryApiTest extends RestAssuredConfig {
 		link.setClientId("CHROME");
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");
-		
-		given().header("Authorization", getValidToken())
-		.contentType("application/json").body(link, ObjectMapperType.JACKSON_2)
-		.when().post("/api/browserlink").then().assertThat().statusCode(200);
-		
-		
+
+		given().header("Authorization", getValidToken()).contentType("application/json")
+				.body(link, ObjectMapperType.JACKSON_2).when().post("/api/browserlink").then().assertThat()
+				.statusCode(200);
+
 		User admin = userRepo.findOneByUserName("admin");
 
-		List<BrowserLink> links = browserRep.findAllByUser(admin);
+		List<BrowserLink> links = browserRep.findAllByUserOrderByVisitedAtDesc(admin);
 		int lastIndex = links.size() - 1;
-		
+
 		BrowserLink browserLink = links.get(lastIndex);
 
 		assertEquals("Description", "desc", browserLink.getDescription());
 		assertEquals("Title", "Cool Page", browserLink.getTitle());
-		
+
 	}
 
 }

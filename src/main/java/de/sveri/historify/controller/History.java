@@ -24,7 +24,7 @@ public class History {
 	public ModelAndView index(Principal principal) {
 		User user = userRepo.findOneByUserName(principal.getName());
 		ModelAndView mav = new ModelAndView("history/index");
-		mav.addObject("histories", browserLinkRepo.findAllByUser(user));
+		mav.addObject("histories", browserLinkRepo.findAllByUserOrderByVisitedAtDesc(user));
 		return mav;
 	}
 
