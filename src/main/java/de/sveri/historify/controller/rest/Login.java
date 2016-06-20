@@ -20,36 +20,34 @@ import lombok.Getter;
 
 @RestController
 public class Login {
-	
+
 	@Autowired
 	@Getter
 	private JwtHelper jwtHelper;
-	
+
 	@Autowired
 	private UserRepository userRep;
-	
-	@RequestMapping(value = "apilogin", method = RequestMethod.POST)
-    public LoginResponse login(@RequestBody final UserLogin login)
-        throws ServletException {
-		
+
+	@RequestMapping(value = "/apilogin", method = RequestMethod.POST)
+	public LoginResponse login(@RequestBody final UserLogin login) throws ServletException {
+
 		User user = userRep.findOneByUserNameOrEmail(login.getName(), login.getName());
-		
-        if (user == null || !UserService.matchesPassword(login.getPassword(), user.getPassword())) {
-            throw new ServletException("Invalid login");
-        }
-        
-        return new LoginResponse(Jwts.builder().setSubject(login.getName())
-                .claim("roles", user.getRole()).setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
-    }
 
-    @SuppressWarnings("unused")
-    private static class LoginResponse {
-        public String token;
+		if (user == null || !UserService.matchesPassword(login.getPassword(), user.getPassword())) {
+			throw new ServletException("Invalid login");
+		}
 
-        public LoginResponse(final String token) {
-            this.token = token;
-        }
-    }
+		return new LoginResponse(Jwts.builder().setSubject(login.getName()).claim("roles", user.getRole())
+				.setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
+	}
+
+	@SuppressWarnings("unused")
+	private static class LoginResponse {
+		public String token;
+
+		public LoginResponse(final String token) {
+			this.token = token;
+		}
+	}
 
 }

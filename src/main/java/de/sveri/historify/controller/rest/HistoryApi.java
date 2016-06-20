@@ -16,23 +16,22 @@ import de.sveri.historify.helper.JwtHelper;
 @RestController
 @RequestMapping("/api")
 public class HistoryApi {
-	
+
 	@Autowired
 	BrowserLinkRepository repo;
-	
+
 	@Autowired
 	JwtHelper jwtHelper;
-	
+
 	@Autowired
 	UserRepository userRepo;
-	
+
 	@RequestMapping(path = "/browserlink", method = RequestMethod.POST)
-	public @ResponseBody OKResponse getTest(@RequestHeader(value="Authorization") String authorizationToken, @RequestBody BrowserLink link){
+	public @ResponseBody OKResponse getTest(@RequestHeader(value = "Authorization") String authorizationToken,
+			@RequestBody BrowserLink link) {
 		link.setUser(userRepo.findOneByUserName(jwtHelper.getSubject(authorizationToken)));
 		repo.save(link);
 		return new OKResponse("Added browser history");
 	}
-	
-	
 
 }

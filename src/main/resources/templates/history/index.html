@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout">
 
 <div layout:fragment="container">
-	<p>History Index</p>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Visited</th>
+				<th>Client</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="history : ${histories}">
+				<td><a th:href="${history.uri}" th:text="${history.title}">VisitedAt</a></td>
+				<td th:text="${history.visitedAt}">VisitedAt</td>
+				<td th:text="${history.clientId}">Client</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 </html>

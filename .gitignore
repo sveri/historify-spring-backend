@@ -22,3 +22,4 @@ bin/
 .project
 build/
 *.log
+src/main/resources/data.sql
