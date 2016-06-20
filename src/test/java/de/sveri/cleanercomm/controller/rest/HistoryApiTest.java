@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.sveri.historify.Application;
@@ -22,7 +21,6 @@ import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
 
-@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=9099")
