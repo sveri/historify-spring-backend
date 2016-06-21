@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://thymeleaf.org/thymeleaf-extras-springsecurity4"
 	layout:decorator="layout">
 
 <div layout:fragment="container">
-	<p>Actual page content</p>
+	<div sec:authorize="isAnonymous()">
+		This is the place where you can gather your entire working history and see it.<br />
+		A chrome plugin is in the work and almost ready. <br /><br /><br />
+		Bonus: This site does not use Javascript!
+		
+		
+	</div>
+
+	<div sec:authorize="!isAnonymous()">
+		<h4>Last 10 Entries</h4>
+
+		<div th:include="history/table :: table"></div>
+	</div>
+
 </div>
 </html>

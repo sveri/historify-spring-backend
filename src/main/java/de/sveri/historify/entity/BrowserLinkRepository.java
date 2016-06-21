@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface BrowserLinkRepository extends CrudRepository<BrowserLink, Long> {
 	List<BrowserLink> findAllByUserOrderByVisitedAtDesc(User user);
 
+	List<BrowserLink> findTop10ByUserOrderByVisitedAtDesc(User user);
+
 }

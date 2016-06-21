@@ -5,24 +5,7 @@
 	layout:decorator="layout">
 
 <div layout:fragment="container">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Visited</th>
-				<th>Client</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="history : ${histories}">
-				<td><a th:href="${history.uri}"
-					th:text="${#strings.abbreviate(history.title, 60)}"
-					th:title="${history.title}">VisitedAt</a></td>
-				<td th:text="${history.visitedAt}">VisitedAt</td>
-				<td th:text="${history.clientId}">Client</td>
-			</tr>
-		</tbody>
-	</table>
+	<div th:include="history/table :: table"></div>
 	<br /> <br /> <br />
 </div>
 </html>
