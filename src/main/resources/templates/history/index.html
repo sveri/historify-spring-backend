@@ -15,14 +15,14 @@
 		</thead>
 		<tbody>
 			<tr th:each="history : ${histories}">
-				<td><a th:href="${history.uri}" th:text="${history.title}">VisitedAt</a></td>
+				<td><a th:href="${history.uri}"
+					th:text="${#strings.abbreviate(history.title, 60)}"
+					th:title="${history.title}">VisitedAt</a></td>
 				<td th:text="${history.visitedAt}">VisitedAt</td>
 				<td th:text="${history.clientId}">Client</td>
 			</tr>
 		</tbody>
 	</table>
-	<br />
-	<br />
-	<br />
+	<br /> <br /> <br />
 </div>
 </html>
