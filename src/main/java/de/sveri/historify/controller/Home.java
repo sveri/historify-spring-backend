@@ -29,4 +29,9 @@ public class Home {
 		return "home/about";
 	}
 
+	@RequestMapping("/dataprivacypolicy")
+	public String dpp() {
+		return "home/dataprivacypolicy";
+	}
+
 }
