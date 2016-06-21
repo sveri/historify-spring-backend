@@ -1,6 +1,5 @@
 package de.sveri.historify.entity;
 
-import java.net.URI;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,29 +14,29 @@ import lombok.Data;
 @Data
 @Entity
 public class BrowserLink {
-	
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Id
-    private Long id;
 
-    @NotNull
-	private URI uri;
-	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Id
+	private Long id;
+
+	@NotNull
+	private String uri;
+
 	private String description;
 
-    @NotNull
+	@NotNull
 	private String title;
-	
+
 	private String metaData;
 
-    @NotNull
+	@NotNull
 	private Date visitedAt;
 
-    @NotNull
+	@NotNull
 	private String clientId;
 
-    @NotNull
-    @OneToOne
+	@NotNull
+	@OneToOne
 	private User user;
 
 }

@@ -3,7 +3,6 @@ package de.sveri.cleanercomm.controller.rest;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class HistoryApiTest extends RestAssuredConfig {
 	public void postBrowserLink() throws Exception {
 		BrowserLink link = new BrowserLink();
 		link.setDescription("desc");
-		link.setUri(new URI("http://sveri.de"));
+		link.setUri("http://sveri.de");
 		link.setClientId("CHROME");
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");

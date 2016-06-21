@@ -27,7 +27,7 @@ public class HistoryApi {
 	UserRepository userRepo;
 
 	@RequestMapping(path = "/browserlink", method = RequestMethod.POST)
-	public @ResponseBody OKResponse getTest(@RequestHeader(value = "Authorization") String authorizationToken,
+	public @ResponseBody OKResponse saveBrowserLink(@RequestHeader(value = "Authorization") String authorizationToken,
 			@RequestBody BrowserLink link) {
 		link.setUser(userRepo.findOneByUserName(jwtHelper.getSubject(authorizationToken)));
 		repo.save(link);
