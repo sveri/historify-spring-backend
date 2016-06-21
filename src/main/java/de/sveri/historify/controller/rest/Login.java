@@ -37,9 +37,13 @@ public class Login {
 			throw new ServletException("Invalid login");
 		}
 
-		return new LoginResponse(Jwts.builder().setSubject(login.getName()).claim("roles", user.getRole())
-				.setIssuedAt(new Date()).signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey())
-				.setExpiration(new Date(System.currentTimeMillis() + 12960000)).compact());
+		Date date = new Date();
+		long t = date.getTime();
+		Date expirationTime = new Date(t + 12960000l);
+
+		return new LoginResponse(Jwts.builder().setSubject(login.getName()).setExpiration(expirationTime)
+				.claim("roles", user.getRole()).setIssuedAt(new Date())
+				.signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
 	}
 
 	@SuppressWarnings("unused")
