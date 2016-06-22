@@ -15,6 +15,9 @@ public class BrowserLinkProvider {
 	@Autowired
 	UserRepository userRepo;
 
+	@Autowired
+	BrowserLinkPagination browserLinkPagination;
+
 	public List<BrowserLink> allByUser(Principal principal) {
 		User user = userRepo.findOneByUserName(principal.getName());
 		return browserLinkRepo.findAllByUserOrderByVisitedAtDesc(user);
@@ -23,6 +26,15 @@ public class BrowserLinkProvider {
 	public List<BrowserLink> lastTenByUser(Principal principal) {
 		User user = userRepo.findOneByUserName(principal.getName());
 		return browserLinkRepo.findTop10ByUserOrderByVisitedAtDesc(user);
+	}
+
+	public List<BrowserLink> findFromPageWithSizeByUser(Principal principal, int page, int size) {
+		User user = userRepo.findOneByUserName(principal.getName());
+		return browserLinkPagination.findByUser(user, new org.springframework.data.domain.PageRequest(page, size));
+	}
+
+	public long totalElements() {
+		return browserLinkPagination.count();
 	}
 
 }
