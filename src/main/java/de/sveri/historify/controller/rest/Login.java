@@ -39,11 +39,12 @@ public class Login {
 
 		Date date = new Date();
 		long t = date.getTime();
-		Date expirationTime = new Date(t + 12960000l);
+		Date expirationTime = new Date(t + 32960000000l);
 
-		return new LoginResponse(Jwts.builder().setSubject(login.getName()).setExpiration(expirationTime)
+		String token = Jwts.builder().setSubject(login.getName()).setExpiration(expirationTime)
 				.claim("roles", user.getRole()).setIssuedAt(new Date())
-				.signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact());
+				.signWith(SignatureAlgorithm.HS256, jwtHelper.getSecretKey()).compact();
+		return new LoginResponse(token);
 	}
 
 	@SuppressWarnings("unused")
