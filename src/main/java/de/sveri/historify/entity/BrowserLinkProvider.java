@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BrowserLinkProvider {
+public class BrowserLinkProvider implements Provider<BrowserLink> {
 
 	@Autowired
 	BrowserLinkRepository browserLinkRepo;
@@ -18,6 +18,7 @@ public class BrowserLinkProvider {
 	@Autowired
 	BrowserLinkPagination browserLinkPagination;
 
+	@Override
 	public List<BrowserLink> allByUser(Principal principal) {
 		User user = userRepo.findOneByUserName(principal.getName());
 		return browserLinkRepo.findAllByUserOrderByVisitedAtDesc(user);
@@ -28,11 +29,13 @@ public class BrowserLinkProvider {
 		return browserLinkRepo.findTop10ByUserOrderByVisitedAtDesc(user);
 	}
 
+	@Override
 	public List<BrowserLink> findFromPageWithSizeByUser(Principal principal, int page, int size) {
 		User user = userRepo.findOneByUserName(principal.getName());
 		return browserLinkPagination.findByUser(user, new org.springframework.data.domain.PageRequest(page, size));
 	}
 
+	@Override
 	public long totalElements() {
 		return browserLinkPagination.count();
 	}

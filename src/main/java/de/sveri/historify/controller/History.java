@@ -10,44 +10,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.sveri.historify.entity.BrowserLinkProvider;
+import de.sveri.historify.entity.BrowserLink;
+import de.sveri.historify.entity.Provider;
+import de.sveri.historify.service.PaginationHandler;
+import de.sveri.historify.service.PaginationHandler.PageItems;
 
 @Controller
 public class History {
 
+	Provider<BrowserLink> browserLinkProvider;
+
+	PaginationHandler paginationHandler;
+
 	@Autowired
-	BrowserLinkProvider browserLinkProvider;
+	public History(Provider<BrowserLink> browserLinkProvider) {
+		paginationHandler = new PaginationHandler(browserLinkProvider);
+		this.browserLinkProvider = browserLinkProvider;
+	}
 
 	@RequestMapping("/history")
 	public ModelAndView index(Principal principal,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int page,
-			@RequestParam(name = "size", required = false, defaultValue = "10") int size) {
+			@RequestParam(name = "page", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", required = false, defaultValue = "10") int pageSize) {
 		ModelAndView mav = new ModelAndView("history/index");
 
-		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUser(principal, page, size));
-		mav.addObject("firstPage", isFirstPage(page, size));
-		mav.addObject("lastPage", isLastPage(page, size, browserLinkProvider.totalElements()));
+		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUser(principal, pageNumber, pageSize));
+		mav.addObject("firstPage", PaginationHandler.isFirstPage(pageNumber, pageSize));
+		mav.addObject("lastPage",
+				PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));
 		mav.addObject("url", "/history");
-		mav.addObject("size", size);
-		mav.addObject("hasPreviousPage", !isFirstPage(page, size));
-		mav.addObject("hasNextPage", !isLastPage(page, size, browserLinkProvider.totalElements()));
-		mav.addObject("totalPages", browserLinkProvider.totalElements() / size);
-		mav.addObject("number", page);
+		mav.addObject("size", pageSize);
+		mav.addObject("hasPreviousPage", !PaginationHandler.isFirstPage(pageNumber, pageSize));
+		mav.addObject("hasNextPage",
+				!PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));
+		mav.addObject("totalPages", paginationHandler.getTotalPages(pageSize));
+		mav.addObject("number", pageNumber);
 
 		List<String> pageSizes = Arrays.asList("10", "20", "50", "100", "1000");
 		mav.addObject("pageSizes", pageSizes);
 
+		List<PageItems> pageItems = paginationHandler.getPageItems(pageSize);
+		mav.addObject("pageItems", pageItems);
+
 		return mav;
-	}
-
-	private static boolean isFirstPage(long page, long size) {
-		// return page <= size;
-		return page == 0;
-	}
-
-	private static boolean isLastPage(long page, long size, long totalEntries) {
-		// return page > totalPages - size;
-		return page == totalEntries / size;
 	}
 
 }

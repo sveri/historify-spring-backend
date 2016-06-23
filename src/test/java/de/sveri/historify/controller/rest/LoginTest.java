@@ -1,4 +1,4 @@
-package de.sveri.cleanercomm.controller.rest;
+package de.sveri.historify.controller.rest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;

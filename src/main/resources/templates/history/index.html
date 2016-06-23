@@ -36,12 +36,14 @@
 						th:if='${hasPreviousPage}'
 						th:href='@{${url}(page=${number - 1},size=${size})}'
 						title='Go to previous page'>«</a></li>
-					<!-- 				<li th:each='item : ${items}' th:class='${item.current}? active : ""'> -->
-					<!-- 					<span th:if='${item.current}' th:text='${item.number}'>1</span> <a -->
-					<!-- 					th:if='${not item.current}' -->
-					<!-- 					th:href='@{${url}(page=${item.number},size=${size})}'><span -->
-					<!-- 						th:text='${item.number}'>1</span></a> -->
-					<!-- 				</li> -->
+						
+					<li th:each='pageItem : ${pageItems}'
+						th:class="${pageItem.current}? active "><span
+						th:if='${pageItem.current}' th:text='${pageItem.number}'>1</span> <a
+						th:if='${not pageItem.current}'
+						th:href='@{${url}(page=${pageItem.number - 1},size=${size})}'><span
+							th:text='${pageItem.number}'>1</span></a></li>
+							
 					<li th:class="${not hasNextPage}? disabled"><span
 						th:if='${not hasNextPage}'>»</span> <a th:if='${hasNextPage}'
 						th:href='@{${url}(page=${number+1},size=${size})}'
@@ -56,31 +58,7 @@
 	</div>
 	<div th:include="history/table :: table"></div>
 
-	<!-- 	<div class="table-pagination"> -->
-	<!-- 		<ul class="pagination"> -->
-	<!-- 			<li th:class="${contactsPage.number eq 0} ? 'disabled' : ''"><a -->
-	<!-- 				th:if="${not contactsPage.firstPage}" -->
-	<!-- 				th:href="@{${'/contacts'}(page=${contactsPage.number-1},size=${contactsPage.size})}">Previous</a> -->
-	<!-- 				<a th:if="${contactsPage.firstPage}" href="javascript:void(0);">Previous</a> -->
-	<!-- 			</li> -->
-
-	<!-- 			<li -->
-	<!-- 				th:each="pageNo : ${#numbers.sequence(0, contactsPage.totalPages - 1)}" -->
-	<!-- 				th:class="${contactsPage.number eq pageNo}? 'active' : ''"><a -->
-	<!-- 				th:if="${contactsPage.number  eq pageNo}" href="javascript:void(0);"> -->
-	<!-- 					<span th:text="${pageNo + 1}"></span> -->
-	<!-- 			</a> <a th:if="${not (contactsPage.number  eq pageNo)}" -->
-	<!-- 				th:href="@{${'/contacts'}(page=${pageNo},size=${contactsPage.size})}"> -->
-	<!-- 					<span th:text="${pageNo + 1}"></span> -->
-	<!-- 			</a></li> -->
-	<!-- 			<li -->
-	<!-- 				th:class="${contactsPage.number + 1 ge contactsPage.totalPages} ? 'disabled' : ''"> -->
-	<!-- 				<a th:if="${not contactsPage.lastPage}" -->
-	<!-- 				th:href="@{${'/contacts'}(page=${contactsPage.number+1},size=${contactsPage.size})}">Next</a> -->
-	<!-- 				<a th:if="${contactsPage.lastPage}" href="javascript:void(0);">Next</a> -->
-	<!-- 			</li> -->
-	<!-- 		</ul> -->
-	<!-- 	</div> -->
+	
 	<br /> <br /> <br />
 </div>
 </html>
