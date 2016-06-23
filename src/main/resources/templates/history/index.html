@@ -14,12 +14,9 @@
 				<form action="/history" method="get" class="form-inline">
 					<div class="form-group">
 						<label for="items-per-page">Items / Page:</label> <select
-							name="size" id="items-per-page" class="form-control">
-							<option>10</option>
-							<option>20</option>
-							<option>50</option>
-							<option>100</option>
-							<option>1000</option>
+							id="items-per-page" class="form-control" name="size">
+							<option th:each="pageSize : ${pageSizes}" th:value="${pageSize}"
+								th:text="${pageSize}" th:selected="(${pageSize} == ${size})">PageSize</option>
 						</select> <input type="hidden" name="page" th:value="${number}" />
 						<button type="submit" class="btn btn-default">Go</button>
 					</div>

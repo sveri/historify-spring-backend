@@ -1,6 +1,8 @@
 package de.sveri.historify.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class History {
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page,
 			@RequestParam(name = "size", required = false, defaultValue = "10") int size) {
 		ModelAndView mav = new ModelAndView("history/index");
+
 		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUser(principal, page, size));
 		mav.addObject("firstPage", isFirstPage(page, size));
 		mav.addObject("lastPage", isLastPage(page, size, browserLinkProvider.totalElements()));
@@ -30,6 +33,9 @@ public class History {
 		mav.addObject("hasNextPage", !isLastPage(page, size, browserLinkProvider.totalElements()));
 		mav.addObject("totalPages", browserLinkProvider.totalElements() / size);
 		mav.addObject("number", page);
+
+		List<String> pageSizes = Arrays.asList("10", "20", "50", "100", "1000");
+		mav.addObject("pageSizes", pageSizes);
 
 		return mav;
 	}
