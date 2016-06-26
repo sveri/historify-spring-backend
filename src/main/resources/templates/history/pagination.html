@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment='pagination' class="row">
+
+	<div class="col-md-4">
+		<div style="margin: 20px;">
+			<form action="/history" method="get" class="form-inline">
+				<div class="form-group">
+					<label for="items-per-page">Items / Page:</label> <select
+						id="items-per-page" class="form-control" name="size">
+						<option th:each="pageSize : ${pageSizes}" th:value="${pageSize}"
+							th:text="${pageSize}" th:selected="(${pageSize} == ${size})">PageSize</option>
+					</select> <input type="hidden" name="page" th:value="${number}" />
+					<button type="submit" class="btn btn-default">Go</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="text-center">
+			<ul class="pagination">
+				<!-- 				<li th:if='${firstPage}'></li> -->
+				<li th:class="${firstPage}? disabled"><span
+					th:if='${firstPage}'>← First</span> <a th:if='${not firstPage}'
+					th:href='@{${url}(page=1,size=${size})}'>←First</a></li>
+				<li th:class="${not hasPreviousPage}? disabled"><span
+					th:if='${not hasPreviousPage}'>«</span> <a
+					th:if='${hasPreviousPage}'
+					th:href='@{${url}(page=${number - 1},size=${size})}'
+					title='Go to previous page'>«</a></li>
+
+				<li th:each='pageItem : ${pageItems}'
+					th:class="${pageItem.current}? active "><span
+					th:if='${pageItem.current}' th:text='${pageItem.number}'>1</span> <a
+					th:if='${not pageItem.current}'
+					th:href='@{${url}(page=${pageItem.number},size=${size})}'><span
+						th:text='${pageItem.number}'>1</span></a></li>
+
+				<li th:class="${not hasNextPage}? disabled"><span
+					th:if='${not hasNextPage}'>»</span> <a th:if='${hasNextPage}'
+					th:href='@{${url}(page=${number+1},size=${size})}'
+					title='Go to next page'>»</a></li>
+				<li th:class="${lastPage}? disabled"><span th:if='${lastPage}'>Last
+						→</span> <a th:if='${not lastPage}'
+					th:href='@{${url}(page=${totalPages},size=${size})}'>Last →</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="col-md-4">
+		<div style="margin: 20px;">
+			<form action="/history/search" method="post" class="form-inline">
+				<div class="form-group">
+					<input type="text" placeholder="Search for" name="searchfor"
+						class="form-control" style="width: 270px;"/>
+					<button type="submit" class="btn btn-default">Search</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+
+</div>
+</html>

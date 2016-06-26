@@ -10,6 +10,7 @@ html {
 
 body > .container {
     padding: 60px 15px 0;
+    width: 1300px;
 }
 
 .footer {
