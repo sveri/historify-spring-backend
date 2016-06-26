@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="search">
+
+
+	<div class="row">
+		<div class="col-md-10">
+			<div style="margin: 20px;">
+				<form action="/history/search" method="post" class="form-inline">
+					<div class="form-group">
+						<input type="text" placeholder="Search for" name="searchfor"
+							class="form-control" style="width: 700px;" />
+						<button type="submit" class="btn btn-default">Search</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+		
+		
+		<div class="col-md-2" style="padding-top: 25px;">
+			<a href="#pagination" class="pull-right">Pagination</a>
+		</div>
+
+	</div>
+</div>
+</html>
