@@ -30,7 +30,7 @@
 					<!-- 				<li th:if='${firstPage}'></li> -->
 					<li th:class="${firstPage}? disabled"><span
 						th:if='${firstPage}'>← First</span> <a th:if='${not firstPage}'
-						th:href='@{${url}(page=0,size=${size})}'>←First</a></li>
+						th:href='@{${url}(page=1,size=${size})}'>←First</a></li>
 					<li th:class="${not hasPreviousPage}? disabled"><span
 						th:if='${not hasPreviousPage}'>«</span> <a
 						th:if='${hasPreviousPage}'
@@ -41,7 +41,7 @@
 						th:class="${pageItem.current}? active "><span
 						th:if='${pageItem.current}' th:text='${pageItem.number}'>1</span> <a
 						th:if='${not pageItem.current}'
-						th:href='@{${url}(page=${pageItem.number - 1},size=${size})}'><span
+						th:href='@{${url}(page=${pageItem.number},size=${size})}'><span
 							th:text='${pageItem.number}'>1</span></a></li>
 							
 					<li th:class="${not hasNextPage}? disabled"><span

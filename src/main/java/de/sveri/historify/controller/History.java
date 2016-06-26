@@ -30,11 +30,11 @@ public class History {
 
 	@RequestMapping("/history")
 	public ModelAndView index(Principal principal,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
 			@RequestParam(name = "size", required = false, defaultValue = "10") int pageSize) {
 		ModelAndView mav = new ModelAndView("history/index");
 
-		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUser(principal, pageNumber, pageSize));
+		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUser(principal, pageNumber - 1, pageSize));
 		mav.addObject("firstPage", PaginationHandler.isFirstPage(pageNumber));
 		mav.addObject("lastPage",
 				PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));

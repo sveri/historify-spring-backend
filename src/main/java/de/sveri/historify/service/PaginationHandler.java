@@ -22,11 +22,11 @@ public class PaginationHandler {
 	}
 
 	public static boolean isFirstPage(long page) {
-		return page == 0;
+		return page == 1;
 	}
 
 	public static boolean isLastPage(long page, long size, long totalEntries) {
-		return page == totalEntries / size;
+		return page - 1 == totalEntries / size;
 	}
 
 	@Value
