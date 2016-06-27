@@ -35,7 +35,8 @@ public class History {
 			@RequestParam(name = "search-for", required = false, defaultValue = "") String searchFor) {
 		ModelAndView mav = new ModelAndView("history/index");
 
-		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchFor));
+		String searchForSimilar = "%" + searchFor.replace(" ", "%") + "%";
+		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchForSimilar));
 		mav.addObject("firstPage", PaginationHandler.isFirstPage(pageNumber));
 		mav.addObject("lastPage",
 				PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));
@@ -52,6 +53,8 @@ public class History {
 
 		List<PageItems> pageItems = paginationHandler.getPageItems(pageSize, pageNumber);
 		mav.addObject("pageItems", pageItems);
+		
+		mav.addObject("searchFor", searchFor);
 
 		return mav;
 	}
