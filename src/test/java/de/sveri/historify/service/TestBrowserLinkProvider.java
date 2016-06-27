@@ -20,7 +20,7 @@ public class TestBrowserLinkProvider implements Provider<BrowserLink> {
 	}
 
 	@Override
-	public List<BrowserLink> findFromPageWithSizeByUser(Principal principal, int page, int size) {
+	public List<BrowserLink> findFromPageWithSizeByUserAndUri(Principal principal, int page, int siz, String urie) {
 		return null;
 	}
 

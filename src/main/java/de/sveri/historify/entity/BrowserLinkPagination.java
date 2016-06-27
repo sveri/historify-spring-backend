@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface BrowserLinkPagination extends PagingAndSortingRepository<BrowserLink, Long> {
-	List<BrowserLink> findByUser(User user, Pageable pageable);
+	List<BrowserLink> findByUserAndUriContainingIgnoreCase(User user, String uri, Pageable pageable);
 
 }

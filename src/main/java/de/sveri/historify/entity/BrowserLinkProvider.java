@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,9 +31,9 @@ public class BrowserLinkProvider implements Provider<BrowserLink> {
 	}
 
 	@Override
-	public List<BrowserLink> findFromPageWithSizeByUser(Principal principal, int page, int size) {
+	public List<BrowserLink> findFromPageWithSizeByUserAndUri(Principal principal, int page, int size, String uri) {
 		User user = userRepo.findOneByUserName(principal.getName());
-		return browserLinkPagination.findByUser(user, new org.springframework.data.domain.PageRequest(page, size));
+		return browserLinkPagination.findByUserAndUriContainingIgnoreCase(user, uri, new PageRequest(page, size));
 	}
 
 	@Override
