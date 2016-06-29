@@ -36,7 +36,7 @@ public class HistoryApiTest extends RestAssuredConfig {
 		BrowserLink link = new BrowserLink();
 		link.setDescription("desc");
 		link.setUri("http://sveri.de");
-		link.setClientId("CHROME");
+		link.setClient("CHROME");
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");
 

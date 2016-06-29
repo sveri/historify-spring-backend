@@ -2,6 +2,7 @@ package de.sveri.historify.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,10 @@ public class BrowserLink {
 	@NotNull
 	private String uri;
 
+	@NotNull
+	private String uriKeywords;
+
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@NotNull
@@ -33,7 +38,7 @@ public class BrowserLink {
 	private Date visitedAt;
 
 	@NotNull
-	private String clientId;
+	private String client;
 
 	@NotNull
 	@OneToOne

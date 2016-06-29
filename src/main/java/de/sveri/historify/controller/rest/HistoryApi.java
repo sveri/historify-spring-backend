@@ -12,6 +12,7 @@ import de.sveri.historify.entity.BrowserLink;
 import de.sveri.historify.entity.BrowserLinkRepository;
 import de.sveri.historify.entity.UserRepository;
 import de.sveri.historify.helper.JwtHelper;
+import de.sveri.historify.service.UriExtractor;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +31,7 @@ public class HistoryApi {
 	public @ResponseBody OKResponse saveBrowserLink(@RequestHeader(value = "Authorization") String authorizationToken,
 			@RequestBody BrowserLink link) {
 		link.setUser(userRepo.findOneByUserName(jwtHelper.getSubject(authorizationToken)));
+		link.setUriKeywords(UriExtractor.extractKeywords(link.getUri()));
 		repo.save(link);
 		return new OKResponse("Added browser history");
 	}

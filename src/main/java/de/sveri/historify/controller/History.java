@@ -36,7 +36,8 @@ public class History {
 		ModelAndView mav = new ModelAndView("history/index");
 
 		String searchForSimilar = "%" + searchFor.replace(" ", "%") + "%";
-		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchForSimilar));
+		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, "(?i)iSH(?-i)"));
+//		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchForSimilar));
 		mav.addObject("firstPage", PaginationHandler.isFirstPage(pageNumber));
 		mav.addObject("lastPage",
 				PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));

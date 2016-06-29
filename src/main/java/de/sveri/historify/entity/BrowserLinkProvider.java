@@ -33,7 +33,10 @@ public class BrowserLinkProvider implements Provider<BrowserLink> {
 	@Override
 	public List<BrowserLink> findFromPageWithSizeByUserAndUri(Principal principal, int page, int size, String uri) {
 		User user = userRepo.findOneByUserName(principal.getName());
-		return browserLinkPagination.findByUserAndUriLikeIgnoreCase(user, uri, new PageRequest(page, size));
+
+		System.out.println(browserLinkPagination.findByUserAndSearchable(1, "l"));
+		return browserLinkPagination.findByUser(user, new PageRequest(page, size));
+//		return browserLinkPagination.findByUserAndUriLikeIgnoreCase(user, uri, new PageRequest(page, size));
 	}
 
 	@Override
