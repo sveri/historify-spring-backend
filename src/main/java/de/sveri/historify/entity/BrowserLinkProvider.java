@@ -3,6 +3,7 @@ package de.sveri.historify.entity;
 import java.security.Principal;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -34,8 +35,12 @@ public class BrowserLinkProvider implements Provider<BrowserLink> {
 	public List<BrowserLink> findFromPageWithSizeByUserAndUri(Principal principal, int page, int size, String uri) {
 		User user = userRepo.findOneByUserName(principal.getName());
 
-		System.out.println(browserLinkPagination.findByUserAndSearchable(1, "l"));
-		return browserLinkPagination.findByUser(user, new PageRequest(page, size));
+		if(StringUtils.isEmpty(uri)){
+			return browserLinkPagination.findByUserOrderByVisitedAtDesc(user, new PageRequest(page, size));
+		}	
+		
+		return browserLinkPagination.findByUserAndSearchable(1, uri);
+//		return browserLinkPagination.findByUser(user, new PageRequest(page, size));
 //		return browserLinkPagination.findByUserAndUriLikeIgnoreCase(user, uri, new PageRequest(page, size));
 	}
 

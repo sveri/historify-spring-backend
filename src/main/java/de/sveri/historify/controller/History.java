@@ -34,10 +34,9 @@ public class History {
 			@RequestParam(name = "size", required = false, defaultValue = "10") int pageSize,
 			@RequestParam(name = "search-for", required = false, defaultValue = "") String searchFor) {
 		ModelAndView mav = new ModelAndView("history/index");
-
-		String searchForSimilar = "%" + searchFor.replace(" ", "%") + "%";
-		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, "(?i)iSH(?-i)"));
-//		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchForSimilar));
+		
+		String searchCleaned = cleanSearchForParam(searchFor);
+		mav.addObject("histories", browserLinkProvider.findFromPageWithSizeByUserAndUri(principal, pageNumber - 1, pageSize, searchCleaned));
 		mav.addObject("firstPage", PaginationHandler.isFirstPage(pageNumber));
 		mav.addObject("lastPage",
 				PaginationHandler.isLastPage(pageNumber, pageSize, browserLinkProvider.totalElements()));
@@ -58,6 +57,10 @@ public class History {
 		mav.addObject("searchFor", searchFor);
 
 		return mav;
+	}
+
+	private String cleanSearchForParam(String searchFor) {
+		return searchFor.replace("|", "").trim().replace(" ", "&");
 	}
 
 }

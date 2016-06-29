@@ -155,22 +155,30 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 -- PostgreSQL database dump complete
 --
 
--- drop MATERIALIZED VIEW browser_link_search 
+-- drop MATERIALIZED VIEW browser_link_search;
+
 CREATE MATERIALIZED VIEW browser_link_search AS 
-select id as bid,
-  user_id as uid,
-  uri as buri,
-  description as bdesc,
-  title as btitle,
-  visited_at as bvisited_at,
-  client as bclient,
+select *,
   to_tsvector(title) || 
-  to_tsvector(uri) || 
-  to_tsvector(coalesce((string_agg(description, ' ')), ''))
+  to_tsvector(coalesce((string_agg(description, ' ')), '')) ||
+  to_tsvector(coalesce((string_agg(uri_keywords, ' ')), ''))
  as document from browser_link
 group by id;
 
 CREATE INDEX idx_browser_link_search ON browser_link_search USING gin(document);
 
+create or replace function refresh_browser_link_search()
+returns trigger language plpgsql
+as $$
+begin
+    refresh materialized view browser_link_search;
+    return null;
+end $$;
 
--- select * from browser_link_search where uid = 10 and document @@ to_tsquery('rerik')
+create trigger refresh_browser_link_search
+after insert or update or delete or truncate
+on browser_link for each statement 
+execute procedure refresh_browser_link_search();
+
+
+-- select * from browser_link_search where user_id = 10 and document @@ to_tsquery('rerik')

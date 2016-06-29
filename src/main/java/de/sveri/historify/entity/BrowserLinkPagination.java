@@ -9,13 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface BrowserLinkPagination extends PagingAndSortingRepository<BrowserLink, Long> {
-	List<BrowserLink> findByUser(User user, Pageable pageable);
-	
+	List<BrowserLink> findByUserOrderByVisitedAtDesc(User user, Pageable pageable);
 
-//    @Modifying
-//    @Query("update User u set u.email = :email "
-//            + "where u.userName = :userName")
-    @Query(value = "select * from browser_link_search where uid = :userId and document @@ to_tsquery(:searchable)", nativeQuery = true)
+    @Query(value = "select * from browser_link_search where user_id = :userId and document @@ to_tsquery(:searchable)", nativeQuery = true)
     List<BrowserLink> findByUserAndSearchable(
             @Param("userId") int userId, 
             @Param("searchable") String searchable);
