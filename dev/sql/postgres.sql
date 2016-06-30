@@ -180,5 +180,7 @@ after insert or update or delete or truncate
 on browser_link for each statement 
 execute procedure refresh_browser_link_search();
 
+GRANT ALL ON TABLE public.browser_link_search TO historify;
+
 
 -- select * from browser_link_search where user_id = 10 and document @@ to_tsquery('rerik')

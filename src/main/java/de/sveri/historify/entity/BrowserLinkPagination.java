@@ -13,7 +13,7 @@ public interface BrowserLinkPagination extends PagingAndSortingRepository<Browse
 
     @Query(value = "select * from browser_link_search where user_id = :userId and document @@ to_tsquery(:searchable)", nativeQuery = true)
     List<BrowserLink> findByUserAndSearchable(
-            @Param("userId") int userId, 
+            @Param("userId") long userId, 
             @Param("searchable") String searchable);
 
 }
