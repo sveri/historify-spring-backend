@@ -4,29 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.sveri.historify.entity.BrowserLink;
-import de.sveri.historify.entity.Provider;
 import lombok.Value;
 
 public class PaginationHandler {
 
-	private Provider<BrowserLink> browserLinkProvider;
+	// private Provider<BrowserLink> browserLinkProvider;
 
-	public PaginationHandler(Provider<BrowserLink> browserLinkProvider) {
-		this.browserLinkProvider = browserLinkProvider;
+	private final List<BrowserLink> elements;
+	private long totalElementCount;
+
+	public PaginationHandler(List<BrowserLink> elements, long totalElementCount) {
+		// this.browserLinkProvider = browserLinkProvider;
+		this.elements = elements;
+		this.totalElementCount = totalElementCount;
+	}
+
+	public List<BrowserLink> getElements() {
+		return elements;
+	}
+
+	public int getElementsCount() {
+		return elements.size();
 	}
 
 	public long getTotalPagesForPageSize(int pageSize) {
-		if (browserLinkProvider.totalElements() % pageSize == 0)
-			return browserLinkProvider.totalElements() / pageSize;
-		return (browserLinkProvider.totalElements() / pageSize) + 1;
+		if (totalElementCount % pageSize == 0)
+			return totalElementCount / pageSize;
+		return (totalElementCount / pageSize) + 1;
 	}
 
 	public static boolean isFirstPage(long page) {
 		return page == 1;
 	}
 
-	public static boolean isLastPage(long page, long size, long totalEntries) {
-		return page - 1 == totalEntries / size;
+	public boolean isLastPage(long page, long size) {
+		return page - 1 == totalElementCount / size;
 	}
 
 	@Value

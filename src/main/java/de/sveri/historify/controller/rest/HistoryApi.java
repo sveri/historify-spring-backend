@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.sveri.historify.entity.BrowserLink;
-import de.sveri.historify.entity.BrowserLinkRepository;
+import de.sveri.historify.entity.BrowserLinkPaginationRepository;
 import de.sveri.historify.entity.UserRepository;
 import de.sveri.historify.helper.JwtHelper;
 import de.sveri.historify.service.UriExtractor;
@@ -19,7 +19,7 @@ import de.sveri.historify.service.UriExtractor;
 public class HistoryApi {
 
 	@Autowired
-	BrowserLinkRepository repo;
+	BrowserLinkPaginationRepository repo;
 
 	@Autowired
 	JwtHelper jwtHelper;
