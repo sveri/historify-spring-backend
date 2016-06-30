@@ -169,6 +169,7 @@ CREATE INDEX idx_browser_link_search ON browser_link_search USING gin(document);
 
 create or replace function refresh_browser_link_search()
 returns trigger language plpgsql
+security definer
 as $$
 begin
     refresh materialized view browser_link_search;
