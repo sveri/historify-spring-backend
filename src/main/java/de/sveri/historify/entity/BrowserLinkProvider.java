@@ -40,8 +40,6 @@ public class BrowserLinkProvider implements Provider<BrowserLink> {
 		}	
 		
 		return browserLinkPagination.findByUserAndSearchable(1, uri);
-//		return browserLinkPagination.findByUser(user, new PageRequest(page, size));
-//		return browserLinkPagination.findByUserAndUriLikeIgnoreCase(user, uri, new PageRequest(page, size));
 	}
 
 	@Override

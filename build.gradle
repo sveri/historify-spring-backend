@@ -41,6 +41,8 @@ dependencies {
 	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE')
 	
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.6.0'
+	
+	compile('org.apache.commons:commons-lang3:3.4')
 
 	
 	runtime('com.h2database:h2')
