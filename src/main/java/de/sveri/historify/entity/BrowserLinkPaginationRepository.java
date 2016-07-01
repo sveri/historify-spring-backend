@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface BrowserLinkPaginationRepository extends PagingAndSortingRepository<BrowserLink, Long> {
 	List<BrowserLink> findByUserOrderByVisitedAtDesc(User user, Pageable pageable);
+	
+
+	@Query(value = "select count(*) from browser_link_search where user_id = :userId and document @@ to_tsquery(:searchable)", nativeQuery = true)
+	Long countByUserAndSearchable(@Param("userId") long userId, @Param("searchable") String searchable);
 
 	@Query(value = "select * from browser_link_search where user_id = :userId and document @@ to_tsquery(:searchable) LIMIT :limit OFFSET :offset", nativeQuery = true)
 	List<BrowserLink> findByUserAndSearchable(@Param("userId") long userId, @Param("searchable") String searchable,

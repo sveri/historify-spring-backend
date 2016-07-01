@@ -112,8 +112,8 @@ public class PaginationHandler implements Pageable<BrowserLink> {
 			PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize);
 			List<BrowserLink> elements = browserLinkProvider.findByUserAndSearchable(user.getId(), searchCleaned,
 					pageRequest.getPageSize(), pageRequest.getOffset());
-			// TODO replace elements.size by elements.totalCount
-			paginationHandler = new PaginationHandler(elements, elements.size(), pageNumber, pageSize);
+			paginationHandler = new PaginationHandler(elements,
+					browserLinkProvider.countByUserAndSearchable(user.getId(), searchCleaned), pageNumber, pageSize);
 		}
 
 		return paginationHandler;
