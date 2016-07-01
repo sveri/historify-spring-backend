@@ -47,8 +47,6 @@ public class HistoryApiTest extends RestAssuredConfig {
 
 		User admin = userRepo.findOneByUserName("admin");
 
-
-//		List<BrowserLink> links = browserRep.findAllByUserOrderByVisitedAtDesc(admin);
 		List<BrowserLink> links = browserRep.findByUserOrderByVisitedAtDesc(admin, new PageRequest(0, 10));
 
 		BrowserLink browserLink = links.get(0);
