@@ -16,7 +16,9 @@
 				<td><a th:href="${history.uri}"
 					th:text="${#strings.abbreviate(history.title, 90)}"
 					th:title="${history.title}">VisitedAt</a></td>
-				<td th:text="${history.visitedAt}">VisitedAt</td>
+				<td th:text="${#dates.format(history.visitedAt, 'dd.MM.yyyy'':''H:mm')}">VisitedAt</td>
+<!-- 				<td th:text="${history.visitedAt}">VisitedAt</td> -->
+<!-- 				${#dates.format(bean.addedOn, 'd MMMM yyyy ''at'' H:mm')} -->
 				<td th:text="${history.client}">Client</td>
 			</tr>
 		</tbody>
