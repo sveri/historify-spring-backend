@@ -48,7 +48,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE browser_link (
-    id bigint NOT NULL,
+    id bigserial NOT NULL PRIMARY KEY,
     client character varying(255) NOT NULL,
     description text,
     meta_data character varying(255),
@@ -80,7 +80,7 @@ ALTER TABLE public.hibernate_sequence OWNER TO historify;
 --
 
 CREATE TABLE users (
-    id bigint NOT NULL,
+    id bigserial NOT NULL PRIMARY KEY,
     email character varying(255) NOT NULL,
     last_login character varying(255),
     password character varying(100) NOT NULL,
@@ -91,14 +91,6 @@ CREATE TABLE users (
 
 
 ALTER TABLE public.users OWNER TO historify;
-
---
--- Name: browser_link_pkey; Type: CONSTRAINT; Schema: public; Owner: historify; Tablespace: 
---
-
-ALTER TABLE ONLY browser_link
-    ADD CONSTRAINT browser_link_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: uk_6dotkott2kjsp8vw4d0m25fb7; Type: CONSTRAINT; Schema: public; Owner: historify; Tablespace: 
@@ -114,14 +106,6 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT uk_k8d0f2n7n88w1a16yhua64onx UNIQUE (user_name);
-
-
---
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: historify; Tablespace: 
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
 --
