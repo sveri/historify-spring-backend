@@ -18,7 +18,7 @@ import io.restassured.mapper.ObjectMapperType;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=9099")
-public class JwtTest {
+public class JwtTest extends RestAssuredConfig{
 
 
 	private static final String API_BROWSERLINK = "/api/browserlink";
