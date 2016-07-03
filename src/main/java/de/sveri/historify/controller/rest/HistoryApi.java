@@ -1,5 +1,7 @@
 package de.sveri.historify.controller.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,6 +36,12 @@ public class HistoryApi {
 		link.setUriKeywords(UriExtractor.extractKeywords(link.getUri()));
 		repo.save(link);
 		return new Response("Added browser history");
+	}
+
+	@RequestMapping(path = "/browserlink")
+	public @ResponseBody Iterable<BrowserLink> getBrowserLink() throws Exception {
+//		return new Response(repo.findAll());
+		return repo.findAll();
 	}
 
 }
