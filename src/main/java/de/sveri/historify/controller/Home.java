@@ -23,10 +23,10 @@ public class Home {
 
 	@RequestMapping("/")
 	public ModelAndView home(Principal principal) {
-		User user = userRepo.findOneByUserName(principal.getName());
 
 		ModelAndView mav = new ModelAndView("home/index");
 		if (principal != null && principal.getName() != null) {
+			User user = userRepo.findOneByUserName(principal.getName());
 			mav.addObject("histories", browserLinkProvider.findByUserOrderByVisitedAtDesc(user, new PageRequest(0, 20)));
 		}
 		return mav;
