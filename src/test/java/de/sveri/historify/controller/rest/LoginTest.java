@@ -1,7 +1,6 @@
 package de.sveri.historify.controller.rest;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 import org.junit.Test;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.sveri.historify.Application;
-import de.sveri.historify.controller.rest.UserLogin;
 import io.restassured.mapper.ObjectMapperType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,7 +30,7 @@ public class LoginTest extends RestAssuredConfig {
 		UserLogin userLogin = new UserLogin("admin", "wrong_password");
 
 		given().contentType("application/json").body(userLogin, ObjectMapperType.JACKSON_2).when().post("/apilogin")
-				.then().body("message", equalTo("Invalid login"));
+				.then().statusCode(401);
 	}
 
 }

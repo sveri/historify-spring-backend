@@ -28,12 +28,12 @@ public class HistoryApi {
 	UserRepository userRepo;
 
 	@RequestMapping(path = "/browserlink", method = RequestMethod.POST)
-	public @ResponseBody OKResponse saveBrowserLink(@RequestHeader(value = "Authorization") String authorizationToken,
+	public @ResponseBody Response saveBrowserLink(@RequestHeader(value = "Authorization") String authorizationToken,
 			@RequestBody BrowserLink link) throws Exception {
 		link.setUser(userRepo.findOneByUserName(jwtHelper.getSubject(authorizationToken)));
 		link.setUriKeywords(UriExtractor.extractKeywords(link.getUri()));
 		repo.save(link);
-		return new OKResponse("Added browser history");
+		return new Response("Added browser history");
 	}
 
 }

@@ -3,6 +3,7 @@ package de.sveri.historify.controller.rest;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.sveri.historify.controller.exception.InvalidLoginException;
 import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import de.sveri.historify.helper.JwtHelper;
@@ -29,12 +31,12 @@ public class Login {
 	private UserRepository userRep;
 
 	@RequestMapping(value = "/apilogin", method = RequestMethod.POST)
-	public LoginResponse login(@RequestBody final UserLogin login) throws ServletException {
+	public LoginResponse login(@RequestBody final UserLogin login, HttpServletResponse response) throws ServletException, InvalidLoginException {
 
 		User user = userRep.findOneByUserNameOrEmail(login.getName(), login.getName());
 
 		if (user == null || !UserService.matchesPassword(login.getPassword(), user.getPassword())) {
-			throw new ServletException("Invalid login");
+			throw new InvalidLoginException();
 		}
 
 		Date date = new Date();

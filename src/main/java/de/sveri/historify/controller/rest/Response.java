@@ -3,7 +3,7 @@ package de.sveri.historify.controller.rest;
 import lombok.Value;
 
 @Value
-public class OKResponse {
+public class Response {
 	
 	private final String message;	
 	
