@@ -1,10 +1,12 @@
 package de.sveri.historify.controller.rest;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,8 @@ import io.restassured.mapper.ObjectMapperType;
 @WebIntegrationTest(value = "server.port=9099")
 public class HistoryApiTest extends RestAssuredConfig {
 
+	private static final String API_BROWSERLINK = "/api/browserlink";
+
 	@Autowired
 	BrowserLinkPaginationRepository browserRep;
 
@@ -41,8 +45,8 @@ public class HistoryApiTest extends RestAssuredConfig {
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");
 
-		given().header("Authorization", getValidToken()).contentType("application/json")
-				.body(link, ObjectMapperType.JACKSON_2).when().post("/api/browserlink").then().assertThat()
+		given().header("Authorization", getValidToken()).contentType(MediaType.APPLICATION_JSON)
+				.body(link, ObjectMapperType.JACKSON_2).when().post(API_BROWSERLINK).then().assertThat()
 				.statusCode(200);
 
 		User admin = userRepo.findOneByUserName("admin");
@@ -53,6 +57,16 @@ public class HistoryApiTest extends RestAssuredConfig {
 
 		assertEquals("Description", "desc", browserLink.getDescription());
 		assertEquals("Title", "Cool Page", browserLink.getTitle());
+	}
+
+	@Test
+	public void postInvalidBrowserLink() throws Exception {
+		BrowserLink link = new BrowserLink();
+		link.setTitle("Cool Page");
+
+		given().header("Authorization", getValidToken()).contentType(MediaType.APPLICATION_JSON)
+				.body(link, ObjectMapperType.JACKSON_2).when().post(API_BROWSERLINK).then().assertThat()
+				.statusCode(500);
 
 	}
 
