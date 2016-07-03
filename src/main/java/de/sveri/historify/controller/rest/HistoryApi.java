@@ -3,6 +3,7 @@ package de.sveri.historify.controller.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class HistoryApi {
 	@RequestMapping(path = "/browserlink")
 	public @ResponseBody Iterable<BrowserLink> getBrowserLink() throws Exception {
 //		return new Response(repo.findAll());
-		return repo.findAll();
+		return repo.findAll(new PageRequest(0, 50));
 	}
 
 }
