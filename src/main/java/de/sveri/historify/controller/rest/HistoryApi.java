@@ -44,25 +44,25 @@ public class HistoryApi {
 	}
 
 	@RequestMapping(path = "/browserlink")
-	public @ResponseBody DeferredResult<Iterable<BrowserLink>> getBrowserLink() throws Exception {
+	public @ResponseBody Iterable<BrowserLink> getBrowserLink() throws Exception {
 
-		// return repo.findAll(new PageRequest(0, 50));
+		 return repo.findAll(new PageRequest(0, 50));
 		
-		final DeferredResult<Iterable<BrowserLink>> deferredResult = new DeferredResult<Iterable<BrowserLink>>();
-		timer.schedule(new TimerTask() {
-			
-			@Override
-			public void run() {
-				if(deferredResult.isSetOrExpired()){
-					throw new RuntimeException();
-				} else {
-					deferredResult.setResult(repo.findAll(new PageRequest(0, 50)));
-				}
-				
-			}
-		}, 100);
-		
-		return deferredResult;
+//		final DeferredResult<Iterable<BrowserLink>> deferredResult = new DeferredResult<Iterable<BrowserLink>>();
+//		timer.schedule(new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				if(deferredResult.isSetOrExpired()){
+//					throw new RuntimeException();
+//				} else {
+//					deferredResult.setResult(repo.findAll(new PageRequest(0, 50)));
+//				}
+//				
+//			}
+//		}, 100);
+//		
+//		return deferredResult;
 	}
 
 
