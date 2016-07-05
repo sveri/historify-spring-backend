@@ -1,6 +1,7 @@
 package de.sveri.historify.controller.rest;
 
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import de.sveri.historify.entity.BrowserLink;
 import de.sveri.historify.entity.BrowserLinkPaginationRepository;
@@ -29,6 +31,8 @@ public class HistoryApi {
 
 	@Autowired
 	UserRepository userRepo;
+	
+	private final Timer timer = new Timer();
 
 	@RequestMapping(path = "/browserlink", method = RequestMethod.POST)
 	public @ResponseBody Response saveBrowserLink(@RequestHeader(value = "Authorization") String authorizationToken,
@@ -40,9 +44,26 @@ public class HistoryApi {
 	}
 
 	@RequestMapping(path = "/browserlink")
-	public @ResponseBody Iterable<BrowserLink> getBrowserLink() throws Exception {
-//		return new Response(repo.findAll());
-		return repo.findAll(new PageRequest(0, 50));
+	public @ResponseBody DeferredResult<Iterable<BrowserLink>> getBrowserLink() throws Exception {
+
+		// return repo.findAll(new PageRequest(0, 50));
+		
+		final DeferredResult<Iterable<BrowserLink>> deferredResult = new DeferredResult<Iterable<BrowserLink>>();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				if(deferredResult.isSetOrExpired()){
+					throw new RuntimeException();
+				} else {
+					deferredResult.setResult(repo.findAll(new PageRequest(0, 50)));
+				}
+				
+			}
+		}, 100);
+		
+		return deferredResult;
 	}
+
 
 }
