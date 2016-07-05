@@ -45,9 +45,6 @@ public class HistoryApi {
 
 	@RequestMapping(path = "/browserlink")
 	public @ResponseBody DeferredResult<Iterable<BrowserLink>> getBrowserLink() throws Exception {
-
-//		 return repo.findAll(new PageRequest(0, 50));
-		
 		final DeferredResult<Iterable<BrowserLink>> deferredResult = new DeferredResult<Iterable<BrowserLink>>();
 		timer.schedule(new TimerTask() {
 			
