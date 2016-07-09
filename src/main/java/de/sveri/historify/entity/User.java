@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -18,8 +19,9 @@ import lombok.Data;
 @Data
 @Table(name="users")
 public class User {
-	
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
+	@SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @Id
     private Long id;
     

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -16,7 +17,8 @@ import lombok.Data;
 @Entity
 public class BrowserLink {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "browser_link_seq", sequenceName = "browser_link_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "browser_link_seq")
 	@Id
 	private Long id;
 
