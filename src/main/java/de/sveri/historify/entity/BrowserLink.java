@@ -45,5 +45,10 @@ public class BrowserLink {
 	@NotNull
 	@OneToOne
 	private User user;
+	
+	private Boolean readLater;
+	
+	@Column(columnDefinition = "TEXT")
+	private String tags;
 
 }

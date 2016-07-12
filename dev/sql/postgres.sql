@@ -169,3 +169,9 @@ GRANT ALL ON TABLE public.browser_link_search TO historify;
 
 
 -- select * from browser_link_search where user_id = 10 and document @@ to_tsquery('rerik')
+
+
+
+ALTER TABLE browser_link ADD COLUMN read_later boolean DEFAULT false;
+
+ALTER TABLE browser_link ADD COLUMN tags text;
