@@ -31,7 +31,7 @@ public class HistoryApi {
 
 	@Autowired
 	UserRepository userRepo;
-	
+
 	private final Timer timer = new Timer();
 
 	@RequestMapping(path = "/browserlink", method = RequestMethod.POST)
@@ -47,20 +47,19 @@ public class HistoryApi {
 	public @ResponseBody DeferredResult<Iterable<BrowserLink>> getBrowserLink() throws Exception {
 		final DeferredResult<Iterable<BrowserLink>> deferredResult = new DeferredResult<Iterable<BrowserLink>>();
 		timer.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
-				if(deferredResult.isSetOrExpired()){
+				if (deferredResult.isSetOrExpired()) {
 					throw new RuntimeException();
 				} else {
-					deferredResult.setResult(repo.findAll(new PageRequest(0, 50)));
+					deferredResult.setResult(repo.findAll(new PageRequest(0, 5)));
 				}
-				
+
 			}
 		}, 0);
-		
+
 		return deferredResult;
 	}
-
 
 }
