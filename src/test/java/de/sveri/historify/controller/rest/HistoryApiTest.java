@@ -1,6 +1,7 @@
 package de.sveri.historify.controller.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
@@ -22,13 +23,13 @@ import de.sveri.historify.entity.BrowserLinkPaginationRepository;
 import de.sveri.historify.entity.User;
 import de.sveri.historify.entity.UserRepository;
 import io.restassured.mapper.ObjectMapperType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebIntegrationTest(value = "server.port=9099")
 public class HistoryApiTest extends RestAssuredConfig {
-
-	private static final String API_BROWSERLINK = "/api/browserlink";
 
 	@Autowired
 	BrowserLinkPaginationRepository browserRep;
@@ -45,9 +46,7 @@ public class HistoryApiTest extends RestAssuredConfig {
 		link.setVisitedAt(new Date());
 		link.setTitle("Cool Page");
 
-		given().header("Authorization", getValidToken()).contentType(MediaType.APPLICATION_JSON)
-				.body(link, ObjectMapperType.JACKSON_2).when().post(API_BROWSERLINK).then().assertThat()
-				.statusCode(200);
+		loggedInPostObjectTo(link, HistoryApi.API_BROWSERLINK).then().assertThat().statusCode(200);
 
 		User admin = userRepo.findOneByUserName("admin");
 
@@ -64,10 +63,34 @@ public class HistoryApiTest extends RestAssuredConfig {
 		BrowserLink link = new BrowserLink();
 		link.setTitle("Cool Page");
 
-		given().header("Authorization", getValidToken()).contentType(MediaType.APPLICATION_JSON)
-				.body(link, ObjectMapperType.JACKSON_2).when().post(API_BROWSERLINK).then().assertThat()
-				.statusCode(500);
+		loggedInPostObjectTo(link, HistoryApi.API_BROWSERLINK).then().assertThat().statusCode(500);
 
+	}
+
+	@Test
+	public void addTagThrowsWithoutUrlAndTags() throws Exception {
+		BrowserLink link = new BrowserLink();
+		link.setClient("some_client");
+
+		loggedInPostObjectTo(link, HistoryApi.API_ADD_TAGS).then().assertThat().statusCode(422).and().assertThat()
+				.body("id", equalTo(HistoryApi.UNPROCESSABLE_TAG_ID));
+	}
+
+	@Test
+	public void addNeedToReadThisTag() throws Exception {
+
+		BrowserLink link = new BrowserLink();
+		link.setClient("some_client");
+
+		loggedInPostObjectTo(link, HistoryApi.API_ADD_TAGS).then().assertThat().statusCode(200);
+	}
+
+	private Response loggedInPostObjectTo(BrowserLink link, String to) {
+		return loggedIn().body(link, ObjectMapperType.JACKSON_2).when().post(to);
+	}
+
+	private RequestSpecification loggedIn() {
+		return given().header("Authorization", getValidToken()).contentType(MediaType.APPLICATION_JSON);
 	}
 
 }

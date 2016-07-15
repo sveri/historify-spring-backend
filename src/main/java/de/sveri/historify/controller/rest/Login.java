@@ -22,6 +22,8 @@ import lombok.Getter;
 
 @RestController
 public class Login {
+	
+	public static final String INVALID_LOGIN_ID = "1000";
 
 	@Autowired
 	@Getter

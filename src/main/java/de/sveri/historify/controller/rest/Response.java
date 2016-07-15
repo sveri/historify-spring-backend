@@ -1,8 +1,8 @@
 package de.sveri.historify.controller.rest;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class Response {
 	
 	private final String message;	
